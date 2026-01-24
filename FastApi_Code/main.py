@@ -2,11 +2,25 @@ from fastapi import FastAPI , File , UploadFile ,HTTPException
 import pandas as pd
 import os ,shutil
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+import json
 
 class InvalidDatasetError(Exception):
     pass
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials = True,
+    allow_headers=["*"],
+    allow_methods=["*"],
+    expose_headers=[
+        "Columns",
+        "X-generated_by",
+        "Content-Disposition"
+    ]
+)
 
 @app.get('/')
 def root():
@@ -32,6 +46,8 @@ async def upload_csv(file : UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=str(e))
     
     df = pd.read_csv(f"filesStorage/{file.filename}")
+    Columns_names = list(df.columns)
+    # print(Columns_names)
     
     flag = False
     date_column_name = ""
@@ -56,11 +72,15 @@ async def upload_csv(file : UploadFile = File(...)):
         return FileResponse(
             file_path,
             media_type="text/csv",
-            headers={"Content-Disposition": f"attachment; filename={file_name[:-4]}_Date_Featured_file.csv"},
+            headers={
+                "Content-Disposition": f"attachment; filename={file_name[:-4]}_Date_Featured_file.csv",
+                "X-generated_by":"Date-Based Feature Engine",
+                "Columns":json.dumps(Columns_names)
+            },
         )
         
     elif(flag == False):
         raise HTTPException(status_code=400 , detail="This csv file does not have date column")
     
 
-    return {"message":"All good here."}
+    return {"message":"All good here.","Columns":Columns_names}
