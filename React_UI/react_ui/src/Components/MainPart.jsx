@@ -1,9 +1,9 @@
 import React from "react";
-import { CiSearch } from "react-icons/ci";
+import { CiSaveDown1 } from "react-icons/ci";
 
 const MainPart = () => {
   return (
-    <div className="w-full bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 border-gray-200 rounded-xl shadow-sm">
+    <div className="w-full relative bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 rounded-xl shadow-sm ">
       {/* left part */}
 
       <div className="h-[70%] w-1/2 mt-5 bg-white">
@@ -29,7 +29,15 @@ const MainPart = () => {
               <option value="" disabled selected>
                 Select a date column
               </option>
-              {["Date","Age","Weight","Height","bmi","college","year of interest"].map((item)=>(
+              {[
+                "Date",
+                "Age",
+                "Weight",
+                "Height",
+                "bmi",
+                "college",
+                "year of interest",
+              ].map((item) => (
                 <option value="created_at">{item}</option>
               ))}
             </select>
@@ -62,7 +70,10 @@ const MainPart = () => {
             </div>
             {["Week", "Day", "Day of week", "is Weekend"].map((item) => (
               <div className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
-                <input type="checkbox" className="accent-blue-600" />
+                <input
+                  type="checkbox"
+                  className="accent-blue-600 scale-150 origin-center"
+                />
                 {item}
               </div>
             ))}
@@ -72,15 +83,37 @@ const MainPart = () => {
             <div className="bg-[#EFF3FB] w-full text-center py-2 text-sm font-semibold text-gray-700">
               Advance Features
             </div>
-            {["Week Number","Quarter","Days since start","Days since previous"].map((item) => (
+            {[
+              "Week Number",
+              "Quarter",
+              "Days since start",
+              "Days since previous",
+            ].map((item) => (
               <div className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
-                <input type="checkbox" className="accent-blue-600" />
+                <input
+                  type="checkbox"
+                  className="accent-blue-600 scale-150 origin-center"
+                />
                 {item}
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      <button
+        className="absolute bottom-4 flex items-center gap-3 rounded-2xl bg-blue-600 px-4 py-2 
+             text-white shadow-lg shadow-blue-500/30 
+             hover:bg-blue-700 hover:shadow-blue-500/40 
+             active:scale-95 transition-all cursor-pointer"
+      >
+        <CiSaveDown1 size={34} />
+
+        <div className="flex flex-col leading-tight">
+          <span className="text-lg font-semibold">Download CSV</span>
+          <span className="text-xs text-blue-100">Save the output file</span>
+        </div>
+      </button>
     </div>
   );
 };
