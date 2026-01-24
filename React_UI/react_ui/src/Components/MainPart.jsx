@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CiSaveDown1 } from "react-icons/ci";
-import axios from 'axios'
+import axios, { all } from 'axios'
+import { ProductData } from "../Context/DataContext";
 
 const MainPart = () => {
 
-  // const columns = async()=>{
-  //   const response = await axios.post
-  // }
+  const {alldata , setalldata} = useContext(ProductData)
   return (
     <div className="w-full relative bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 rounded-xl shadow-sm ">
       {/* left part */}
@@ -34,15 +33,7 @@ const MainPart = () => {
               <option value="" disabled selected>
                 Select a date column
               </option>
-              {[
-                "Date",
-                "Age",
-                "Weight",
-                "Height",
-                "bmi",
-                "college",
-                "year of interest",
-              ].map((item) => (
+              {alldata.map((item) => (
                 <option value="created_at">{item}</option>
               ))}
             </select>

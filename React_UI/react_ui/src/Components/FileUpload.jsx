@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
 import { useState } from "react";
 import axios from "axios";
+import { ProductData } from "../Context/DataContext";
 
 const FileUpload = () => {
   const [filename, setfilename] = useState("Drag & drop your CSV file here");
   const [file, setfile] = useState(null);
+
+  const {alldata , setalldata} = useContext(ProductData)
 
   useEffect(() => {
     if (!file) return;
@@ -19,7 +22,8 @@ const FileUpload = () => {
           formdata,
         );
         const columns = JSON.parse(response.headers["columns"])
-        // console.log(columns[0]);
+        console.log(response.headers["columns"]);
+        setalldata(columns)
       } catch (err) {
         console.log(err);
       }
