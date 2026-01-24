@@ -8,7 +8,6 @@ class InvalidDatasetError(Exception):
 
 app = FastAPI()
 
-
 @app.get('/')
 def root():
     return {"message" : "hello"}
@@ -43,7 +42,6 @@ async def upload_csv(file : UploadFile = File(...)):
             
             
     if(flag):
-        print("Ahe re...")
         
         df[date_column_name] = pd.to_datetime(df[date_column_name] , errors="coerce")
         
@@ -53,18 +51,16 @@ async def upload_csv(file : UploadFile = File(...)):
         df[f"{date_column_name}_day_name"] = df[date_column_name].dt.day_name()
         df[f"{date_column_name}_week"] = df[date_column_name].dt.isocalendar().week
         
-        print(file_path)
-        # final_file = df.to_csv(file_path)
-        # print(final_file)
+        df.to_csv(file_path , index=False)
         
         return FileResponse(
             file_path,
             media_type="text/csv",
-            headers={"Content-Disposition": "attachment; filename=downloaded_file.csv"}
+            headers={"Content-Disposition": f"attachment; filename={file_name[:-4]}_Date_Featured_file.csv"},
         )
         
     else:
-        print("Nahi aahe re halku re..")
+        raise HTTPException(status_code=400 , detail="This csv file does not have date column")
     
 
     return {"message":"All good here."}
