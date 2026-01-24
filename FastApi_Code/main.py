@@ -59,7 +59,7 @@ async def upload_csv(file : UploadFile = File(...)):
             headers={"Content-Disposition": f"attachment; filename={file_name[:-4]}_Date_Featured_file.csv"},
         )
         
-    else:
+    elif(flag == False):
         raise HTTPException(status_code=400 , detail="This csv file does not have date column")
     
 
