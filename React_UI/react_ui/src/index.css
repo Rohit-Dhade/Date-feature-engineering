@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+.pt-robo-regular {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.pt-robo-bold {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: "Bohme";
+    src: url('./assets/fonts/Bohme-Rounded.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* @font-face {
+    font-family: ;
+    src: url('./assets/fonts/');
+} */
