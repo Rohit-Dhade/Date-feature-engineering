@@ -1,7 +1,12 @@
 import React from "react";
 import { CiSaveDown1 } from "react-icons/ci";
+import axios from 'axios'
 
 const MainPart = () => {
+
+  // const columns = async()=>{
+  //   const response = await axios.post
+  // }
   return (
     <div className="w-full relative bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 rounded-xl shadow-sm ">
       {/* left part */}
