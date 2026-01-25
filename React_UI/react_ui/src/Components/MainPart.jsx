@@ -1,11 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CiSaveDown1 } from "react-icons/ci";
-import axios, { all } from 'axios'
+import axios, { all } from "axios";
 import { ProductData } from "../Context/DataContext";
 
 const MainPart = () => {
+  const [OptionsSelected, setOptionsSelected] = useState([]);
+  const [date_column, setdate_column] = useState("");
+  const { alldata, setalldata } = useContext(ProductData);
+  console.log(alldata);
 
-  const {alldata , setalldata} = useContext(ProductData)
+  useEffect(() => {
+    if (alldata === undefined) return;
+  }, [OptionsSelected, alldata]);
+
+  const SendData = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append("file", alldata.file);
+      formData.append("features_selected",JSON.stringify(OptionsSelected || []));
+
+      const response = await axios.post(
+        "http://localhost:8000/upload/",
+        formData,
+        { responseType: "blob" },
+      );
+
+      const url = window.URL.createObjectURL(response.data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "generated_features.csv";
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed", err);
+    }
+  };
+
   return (
     <div className="w-full relative bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 rounded-xl shadow-sm ">
       {/* left part */}
@@ -25,16 +56,23 @@ const MainPart = () => {
 
           <div className="relative">
             <select
+              defaultValue={"Select a date column"}
               className="w-full appearance-none rounded-lg border border-gray-300 bg-white 
                  px-4 py-2 pr-10 text-sm text-gray-900
                  focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100
                  cursor-pointer"
             >
-              <option value="" disabled selected>
-                Select a date column
-              </option>
-              {alldata.map((item) => (
-                <option value="created_at">{item}</option>
+              <option value="">Select a date column</option>
+              {alldata.columns_data.map((item) => (
+                <option
+                  onClick={(e) => {
+                    setdate_column(e.target.value);
+                  }}
+                  key={item}
+                  value={item}
+                >
+                  {item}
+                </option>
               ))}
             </select>
             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -64,9 +102,17 @@ const MainPart = () => {
             <div className="bg-[#EFF3FB] w-full text-center py-2 text-sm font-semibold text-gray-700">
               Basic Features
             </div>
-            {["Week", "Day", "Day of week", "is Weekend"].map((item) => (
-              <div className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
+            {["Week", "Day","Year","Month","Day name"].map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+              >
                 <input
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setOptionsSelected((prev) => [...prev, item])
+                      : prev.filter((i) => i !== item);
+                  }}
                   type="checkbox"
                   className="accent-blue-600 scale-150 origin-center"
                 />
@@ -81,12 +127,21 @@ const MainPart = () => {
             </div>
             {[
               "Week Number",
-              "Quarter",
+              "Qaurter",
               "Days since start",
-              "Days since previous",
+              "is Weekend",
+              "Day of week"
             ].map((item) => (
-              <div className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
+              <div
+                key={item}
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+              >
                 <input
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setOptionsSelected((prev) => [...prev, item])
+                      : prev.filter((i) => i !== item);
+                  }}
                   type="checkbox"
                   className="accent-blue-600 scale-150 origin-center"
                 />
@@ -98,6 +153,13 @@ const MainPart = () => {
       </div>
 
       <button
+        onClick={() => {
+          (setalldata((prev) => ({
+            ...prev,
+            features_selected: OptionsSelected,
+          })),
+            SendData());
+        }}
         className="absolute bottom-4 flex items-center gap-3 rounded-2xl bg-blue-600 px-4 py-2 
              text-white shadow-lg shadow-blue-500/30 
              hover:bg-blue-700 hover:shadow-blue-500/40 

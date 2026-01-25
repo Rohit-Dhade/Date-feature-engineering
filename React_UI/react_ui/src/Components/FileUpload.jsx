@@ -1,29 +1,33 @@
 import React, { useCallback, useContext, useEffect } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
 import { useState } from "react";
-import axios from "axios";
+import axios, { all } from "axios";
 import { ProductData } from "../Context/DataContext";
 
 const FileUpload = () => {
   const [filename, setfilename] = useState("Drag & drop your CSV file here");
   const [file, setfile] = useState(null);
-
-  const {alldata , setalldata} = useContext(ProductData)
+  const [date_column, setdate_column] = useState("");
+  const { alldata, setalldata } = useContext(ProductData);
 
   useEffect(() => {
     if (!file) return;
 
     const reader = async () => {
-      const formdata = new FormData();
-      formdata.append("file", file);
+      setalldata((prev) => ({ ...prev, file: file }));
+      const formdata = new FormData()
+      formdata.append("file",file);
+      formdata.append("features_selected",JSON.stringify(alldata.features_selected))
+      formdata.append("columns_data" , JSON.stringify(alldata.columns_data || []))
+
       try {
         const response = await axios.post(
           "http://localhost:8000/upload/",
           formdata,
         );
-        const columns = JSON.parse(response.headers["columns"])
-        console.log(response.headers["columns"]);
-        setalldata(columns)
+        const columns = JSON.parse(response.headers["columns"]);
+        console.log(columns);
+        setalldata((prev) => ({ ...prev, columns_data: columns }));
       } catch (err) {
         console.log(err);
       }
@@ -60,6 +64,7 @@ const FileUpload = () => {
           accept=".csv"
           className="hidden"
           onChange={(e) => {
+            const file = e.target.files[0];
             (setfilename(e.target.files[0].name), setfile(e.target.files[0]));
           }}
         />
