@@ -10,6 +10,8 @@ const FileUpload = () => {
   const [date_column, setdate_column] = useState("");
   const { alldata, setalldata } = useContext(ProductData);
 
+  // Something something please work.
+
   useEffect(() => {
     if (!file) return;
 
