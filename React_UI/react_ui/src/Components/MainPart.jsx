@@ -21,7 +21,7 @@ const MainPart = () => {
 
       const API_BASE = import.meta.env.VITE_API_BASE_URL
       const response = await axios.post(
-        `${API_BASE}/file-upload/`,
+        `${API_BASE}/file-upload`,
         formData,
         { responseType: "blob" },
       );
