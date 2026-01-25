@@ -12,7 +12,7 @@ class InvalidDatasetError(Exception):
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_headers=["*"],
     allow_methods=["*"],
@@ -103,3 +103,4 @@ async def upload_csv(file: UploadFile = File(...), features_selected: str = Form
         )
 
     return {"message": "All good here.", "Columns": Columns_names}
+1
