@@ -21,12 +21,12 @@ const FileUpload = () => {
       formdata.append("columns_data" , JSON.stringify(alldata.columns_data || []))
 
       try {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL
         const response = await axios.post(
-          "http://localhost:8000/upload/",
+          `${API_BASE}/upload/`,
           formdata,
         );
         const columns = JSON.parse(response.headers["columns"]);
-        console.log(columns);
         setalldata((prev) => ({ ...prev, columns_data: columns }));
       } catch (err) {
         console.log(err);

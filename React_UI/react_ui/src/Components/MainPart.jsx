@@ -7,7 +7,6 @@ const MainPart = () => {
   const [OptionsSelected, setOptionsSelected] = useState([]);
   const [date_column, setdate_column] = useState("");
   const { alldata, setalldata } = useContext(ProductData);
-  console.log(alldata);
 
   useEffect(() => {
     if (alldata === undefined) return;
