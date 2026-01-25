@@ -13,6 +13,7 @@ const MainPart = () => {
   }, [OptionsSelected, alldata]);
 
   const SendData = async () => {
+    // if(!alldata.file) return;
     try {
       const formData = new FormData();
 

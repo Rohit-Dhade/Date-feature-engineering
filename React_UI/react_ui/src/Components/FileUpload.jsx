@@ -66,8 +66,9 @@ const FileUpload = () => {
           accept=".csv"
           className="hidden"
           onChange={(e) => {
-            const file = e.target.files[0];
-            (setfilename(e.target.files[0].name), setfile(e.target.files[0]));
+            const selectedFile = e.target.files?.[0];
+            if(!selectedFile) return;
+            (setfilename(selectedFile.name), setfile(selectedFile));
           }}
         />
       </label>
