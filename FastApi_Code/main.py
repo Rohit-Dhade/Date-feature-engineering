@@ -29,7 +29,7 @@ def health_check():
     return {"status" : "healthy"}
 
 
-@app.post("/upload/")
+@app.post("/file-upload/")
 async def upload_csv(file: UploadFile = File(...), features_selected: str = Form(...)):
 
     if not file.filename.endswith(".csv"):
