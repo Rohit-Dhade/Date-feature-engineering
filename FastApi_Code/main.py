@@ -27,6 +27,10 @@ app.add_middleware(
 def root():
     return {"message": "hello"}
 
+@app.get('/health')
+def health_check():
+    return {"status" : "healthy"}
+
 
 @app.post("/upload/")
 async def upload_csv(file: UploadFile = File(...), features_selected: str = Form(...)):
