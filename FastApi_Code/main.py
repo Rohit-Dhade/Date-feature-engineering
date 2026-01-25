@@ -12,7 +12,7 @@ class InvalidDatasetError(Exception):
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://date-feature-engineering.vercel.app" , "https://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_headers=["*"],
     allow_methods=["*"],
