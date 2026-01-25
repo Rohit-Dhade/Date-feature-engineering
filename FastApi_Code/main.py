@@ -4,9 +4,6 @@ import os, shutil
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import json
-import pydantic
-from pydantic import BaseModel
-
 
 class InvalidDatasetError(Exception):
     pass
