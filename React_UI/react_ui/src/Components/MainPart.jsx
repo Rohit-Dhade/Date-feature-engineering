@@ -19,8 +19,9 @@ const MainPart = () => {
       formData.append("file", alldata.file);
       formData.append("features_selected",JSON.stringify(OptionsSelected || []));
 
+      const API_BASE = import.meta.env.VITE_API_BASE_URL
       const response = await axios.post(
-        "http://localhost:8000/upload/",
+        `${API_BASE}/file-upload/`,
         formData,
         { responseType: "blob" },
       );
