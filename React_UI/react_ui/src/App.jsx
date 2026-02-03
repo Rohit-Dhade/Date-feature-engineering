@@ -4,7 +4,6 @@ import FileUpload from './Components/FileUpload'
 import MainPart from './Components/MainPart'
 import Loader from './Components/Loader'
 
-// bg-[#F0F3FC]
 
 const App = () => {
   return (
