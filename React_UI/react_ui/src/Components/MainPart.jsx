@@ -42,7 +42,6 @@ const MainPart = () => {
 
   return (
     <div className="w-full relative bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 rounded-xl shadow-sm ">
-      {/* left part */}
 
       <div className="h-[70%] w-1/2 mt-5 bg-white">
         <div className="flex items-center gap-2">
@@ -91,7 +90,6 @@ const MainPart = () => {
 
       <div className="h-[70%] w-[0.15%] bg-gray-300 mt-5"></div>
 
-      {/* right part */}
       <div className="w-1/2 bg-white p-5 rounded-xl shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-blue-600 text-2xl font-bold">3.</span>
