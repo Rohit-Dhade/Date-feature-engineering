@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { CiSaveDown1 } from "react-icons/ci";
 import axios, { all } from "axios";
 import { ProductData } from "../Context/DataContext";
+import Loader from './Loader'
 
 const MainPart = () => {
   const [OptionsSelected, setOptionsSelected] = useState([]);
   const [date_column, setdate_column] = useState("");
   const { alldata, setalldata } = useContext(ProductData);
+  const [icon, seticon] = useState(1);
 
   useEffect(() => {
     if (alldata === undefined) return;
@@ -18,7 +20,7 @@ const MainPart = () => {
       const formData = new FormData();
 
       formData.append("file", alldata.file);
-      formData.append("features_selected",JSON.stringify(OptionsSelected || []));
+      formData.append("features_selected", JSON.stringify(OptionsSelected || []));
 
       const API_BASE = import.meta.env.VITE_API_BASE_URL
       const response = await axios.post(
@@ -103,7 +105,7 @@ const MainPart = () => {
             <div className="bg-[#EFF3FB] w-full text-center py-2 text-sm font-semibold text-gray-700">
               Basic Features
             </div>
-            {["Week", "Day","Year","Month","Day name"].map((item) => (
+            {["Week", "Day", "Year", "Month", "Day name"].map((item) => (
               <div
                 key={item}
                 className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
@@ -159,14 +161,15 @@ const MainPart = () => {
             ...prev,
             features_selected: OptionsSelected,
           })),
-            SendData());
+            SendData()); seticon(prev => (prev === 1 ? 2 : 1));
         }}
         className="absolute bottom-4 flex items-center gap-3 rounded-2xl bg-blue-600 px-4 py-2 
              text-white shadow-lg shadow-blue-500/30 
              hover:bg-blue-700 hover:shadow-blue-500/40 
-             active:scale-95 transition-all cursor-pointer"
+             active:scale-95 transition-all cursor-pointer justify-center"
       >
-        <CiSaveDown1 size={34} />
+        {icon === 1 && <CiSaveDown1 size={34} />}
+        {icon === 2 && <Loader />}
 
         <div className="flex flex-col leading-tight">
           <span className="text-lg font-semibold">Download CSV</span>
