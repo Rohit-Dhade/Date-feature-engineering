@@ -41,17 +41,17 @@ const MainPart = () => {
   };
 
   return (
-    <div className="w-full relative bg-white h-[61%] mt-2 flex justify-center gap-6 px-8 rounded-xl shadow-sm ">
+    <div className="w-full h-[60vh] relative bg-white min-h-[65%] mt-2 flex flex-col lg:flex-row justify-center gap-6 px-4 sm:px-6 lg:px-8 rounded-xl shadow-sm">
 
-      <div className="h-[70%] w-1/2 mt-5 bg-white">
+      <div className="h-auto lg:h-[70%] w-full lg:w-1/2 mt-5 bg-white">
         <div className="flex items-center gap-2">
-          <span className="text-blue-600 text-2xl font-bold">2.</span>
-          <h2 className="text-lg font-semibold text-gray-900">
+          <span className="text-blue-600 text-xl sm:text-2xl font-bold">2.</span>
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900">
             Select data Column
           </h2>
         </div>
 
-        <div className="flex flex-col gap-4 max-w-md mt-5 pl-6">
+        <div className="flex flex-col gap-4 w-full max-w-md mt-5 sm:pl-6">
           <label className="text-sm font-medium text-gray-700">
             Choose date column
           </label>
@@ -60,9 +60,9 @@ const MainPart = () => {
             <select
               defaultValue={"Select a date column"}
               className="w-full appearance-none rounded-lg border border-gray-300 bg-white 
-                 px-4 py-2 pr-10 text-sm text-gray-900
-                 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100
-                 cursor-pointer"
+          px-4 py-2 pr-10 text-sm text-gray-900
+          focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100
+          cursor-pointer"
             >
               <option value="">Select a date column</option>
               {alldata.columns_data.map((item) => (
@@ -88,18 +88,20 @@ const MainPart = () => {
         </div>
       </div>
 
-      <div className="h-[70%] w-[0.15%] bg-gray-300 mt-5"></div>
+      {/* DIVIDER */}
+      <div className="hidden lg:block h-[70%] w-[0.15%] bg-gray-300 mt-5"></div>
 
-      <div className="w-1/2 bg-white p-5 rounded-xl shadow-sm">
+      {/* RIGHT SIDE */}
+      <div className="w-full lg:w-1/2 bg-white p-4 sm:p-5 rounded-xl shadow-sm">
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-blue-600 text-2xl font-bold">3.</span>
-          <h2 className="text-lg font-semibold text-gray-900">
+          <span className="text-blue-600 text-xl sm:text-2xl font-bold">3.</span>
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900">
             Select Feature to Generate
           </h2>
         </div>
 
-        <div className="flex w-full gap-6">
-          <div className="w-1/2 rounded-xl border border-blue-300 overflow-hidden">
+        <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-6">
+          <div className="w-full sm:w-1/2 rounded-xl border border-blue-300 overflow-hidden">
             <div className="bg-[#EFF3FB] w-full text-center py-2 text-sm font-semibold text-gray-700">
               Basic Features
             </div>
@@ -115,14 +117,14 @@ const MainPart = () => {
                       : prev.filter((i) => i !== item);
                   }}
                   type="checkbox"
-                  className="accent-blue-600 scale-150 origin-center"
+                  className="accent-blue-600 scale-125 sm:scale-150 origin-center"
                 />
                 {item}
               </div>
             ))}
           </div>
 
-          <div className="w-1/2 rounded-xl border border-blue-300 overflow-hidden">
+          <div className="w-full sm:w-1/2 rounded-xl border border-blue-300 overflow-hidden">
             <div className="bg-[#EFF3FB] w-full text-center py-2 text-sm font-semibold text-gray-700">
               Advance Features
             </div>
@@ -144,7 +146,7 @@ const MainPart = () => {
                       : prev.filter((i) => i !== item);
                   }}
                   type="checkbox"
-                  className="accent-blue-600 scale-150 origin-center"
+                  className="accent-blue-600 scale-125 sm:scale-150 origin-center"
                 />
                 {item}
               </div>
@@ -153,28 +155,31 @@ const MainPart = () => {
         </div>
       </div>
 
+
       <button
         onClick={() => {
           (setalldata((prev) => ({
             ...prev,
             features_selected: OptionsSelected,
           })),
-            SendData()); seticon(prev => (prev === 1 ? 2 : 1));
+            SendData());
+          seticon((prev) => (prev === 1 ? 2 : 1));
         }}
-        className="absolute bottom-4 flex items-center gap-3 rounded-2xl bg-blue-600 px-4 py-2 
-             text-white shadow-lg shadow-blue-500/30 
-             hover:bg-blue-700 hover:shadow-blue-500/40 
-             active:scale-95 transition-all cursor-pointer justify-center"
+        className="w-full sm:w-auto mt-6 lg:mt-0 lg:absolute lg:bottom-4 flex items-center gap-3 rounded-2xl bg-blue-600 px-4 py-2 
+    text-white shadow-lg shadow-blue-500/30 
+    hover:bg-blue-700 hover:shadow-blue-500/40 
+    active:scale-95 transition-all cursor-pointer justify-center"
       >
-        {icon === 1 && <CiSaveDown1 size={34} />}
+        {icon === 1 && <CiSaveDown1 size={28} />}
         {icon === 2 && <Loader />}
 
-        <div className="flex flex-col leading-tight">
-          <span className="text-lg font-semibold">Download CSV</span>
+        <div className="flex flex-col leading-tight text-center sm:text-left">
+          <span className="text-base sm:text-lg font-semibold">Download CSV</span>
           <span className="text-xs text-blue-100">Save the output file</span>
         </div>
       </button>
     </div>
+
   );
 };
 

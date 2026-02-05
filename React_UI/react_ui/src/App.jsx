@@ -7,13 +7,14 @@ import Loader from './Components/Loader'
 
 const App = () => {
   return (
-    <div className='bg-blue-400 min-h-screen'>
-      <div className="h-screen w-full px-50 py-5 no-scrollbar overflow-auto">
+    <div className="bg-blue-400 min-h-screen">
+      <div className="w-full h-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-4 sm:py-6 md:py-8 overflow-auto no-scrollbar">
         <Header />
         <FileUpload />
         <MainPart />
       </div>
     </div>
+
   )
 }
 

@@ -18,9 +18,9 @@ const FileUpload = () => {
     const reader = async () => {
       setalldata((prev) => ({ ...prev, file: file }));
       const formdata = new FormData()
-      formdata.append("file",file);
-      formdata.append("features_selected",JSON.stringify(alldata.features_selected))
-      formdata.append("columns_data" , JSON.stringify(alldata.columns_data || []))
+      formdata.append("file", file);
+      formdata.append("features_selected", JSON.stringify(alldata.features_selected))
+      formdata.append("columns_data", JSON.stringify(alldata.columns_data || []))
 
       try {
         const API_BASE = import.meta.env.VITE_API_BASE_URL
@@ -38,24 +38,28 @@ const FileUpload = () => {
   }, [file]);
 
   return (
-    <div className="bg-white flex flex-col gap-4 mt-4 p-6 border border-gray-200 rounded-xl shadow-sm">
+    <div className="bg-white flex flex-col gap-4 mt-4 p-4 sm:p-6 border border-gray-200 rounded-xl shadow-sm">
       <div className="flex items-center gap-2">
-        <span className="text-blue-600 text-2xl font-bold">1.</span>
-        <h2 className="text-lg font-semibold text-gray-900">Upload CSV file</h2>
+        <span className="text-blue-600 text-xl sm:text-2xl font-bold">1.</span>
+        <h2 className="text-base sm:text-lg font-semibold text-gray-900">
+          Upload CSV file
+        </h2>
       </div>
 
       <label
-        className="group cursor-pointer bg-[#F4F7FF] p-8 border-2 border-dashed border-blue-300 rounded-xl 
-                    hover:bg-blue-50 hover:border-blue-400 transition"
+        className="group cursor-pointer bg-[#F4F7FF] p-6 sm:p-8 border-2 border-dashed border-blue-300 rounded-xl 
+               hover:bg-blue-50 hover:border-blue-400 transition"
       >
-        <div className="flex flex-col items-center gap-3 text-center">
-          <div className="text-blue-500 text-4xl">
+        <div className="flex flex-col items-center gap-2 sm:gap-3 text-center">
+          <div className="text-blue-500 text-3xl sm:text-4xl">
             <IoMdCloudUpload />
           </div>
 
-          <p className="text-sm font-medium text-gray-700">{filename}</p>
+          <p className="text-xs sm:text-sm font-medium text-gray-700 break-all">
+            {filename}
+          </p>
 
-          <p className="text-xs text-gray-500">
+          <p className="text-[11px] sm:text-xs text-gray-500">
             or <span className="text-blue-600 underline">browse</span> from your
             computer
           </p>
@@ -67,7 +71,7 @@ const FileUpload = () => {
           className="hidden"
           onChange={(e) => {
             const selectedFile = e.target.files?.[0];
-            if(!selectedFile) return;
+            if (!selectedFile) return;
             (setfilename(selectedFile.name), setfile(selectedFile));
           }}
         />
