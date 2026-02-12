@@ -35,6 +35,7 @@ const MainPart = () => {
       link.download = "generated_features.csv";
       link.click();
       window.URL.revokeObjectURL(url);
+      seticon(1);
     } catch (err) {
       console.error("Download failed", err);
     }
